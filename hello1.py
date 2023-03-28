@@ -1,11 +1,13 @@
-def hello():
- f = open("text1.txt", "r")
- print(f.read())
-   
-hello()
+import boto3
 
-def hello():
-  f = open("text2.text","r")
-  print(f.read())
+s3 = boto3.client('s3')
 
- hello() 
+response = s3.list_buckets()
+buckets = [bucket['Name'] for bucket in response['Buckets']]
+
+with open('bucket_names.txt', 'w') as f:
+    for bucket in buckets:
+        f.write(bucket + '\n')
+
+
+
